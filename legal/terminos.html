@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/rana.svg" type="image/x-icon">
+    <meta name="copyright" content="Manuel Casimiro Carrasco">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos y Condiciones - Urukais Klick</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="menu">
+        <div class="menu-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="menu-items">
+            <li class="active"><a href="index.html"><i class="fas fa-home"></i> <span data-translate="home">Inicio</span></a></li>
+            <li><a href="pages/cronometro.html"><i class="fas fa-stopwatch"></i> <span data-translate="stopwatch">Cronómetro</span></a></li>
+            <li><a href="pages/alarma.html"><i class="fas fa-clock"></i> <span data-translate="alarm">Alarma</span></a></li>
+            <li class="submenu">
+                <a href="#"><i class="fas fa-palette"></i> <span data-translate="themes">Temas</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu-items">
+                    <li><a href="#" data-theme="green"><i class="fas fa-circle"></i> <span data-translate="green">Verde</span></a></li>
+                    <li><a href="#" data-theme="blue"><i class="fas fa-circle"></i> <span data-translate="blue">Azul</span></a></li>
+                    <li><a href="#" data-theme="purple"><i class="fas fa-circle"></i> <span data-translate="purple">Púrpura</span></a></li>
+                </ul>
+            </li>
+            <li class="submenu">
+                <a href="#"><i class="fas fa-cog"></i> <span data-translate="settings">Configuración</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu-items">
+                    <li><a href="/sounds.html"><i class="fas fa-volume-up"></i> <span data-translate="sounds">Sonidos</span></a></li>
+                   
+                    <li class="submenu">
+                        <a href="#"><i class="fas fa-language"></i> <span data-translate="language">Idioma</span> <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu-items language-menu">
+                            <li><a href="#" onclick="setLanguage('es')"><span class="flag-icon flag-icon-es"></span> Español</a></li>
+                            <li><a href="#" onclick="setLanguage('en')"><span class="flag-icon flag-icon-gb"></span> English</a></li>
+                            <li><a href="#" onclick="setLanguage('fr')"><span class="flag-icon flag-icon-fr"></span> Français</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="/pages/a-cerca-de.html"><i class="fas fa-info-circle"></i> <span data-translate="about">Acerca de</span></a></li>
+        </ul>
+    </nav>
+
+    <div class="contenedor legal-container">
+        <h1>🐸 Términos y Condiciones 🐸</h1>
+        
+        <div class="legal-content">
+            <section class="legal-section">
+                <h2>1. Aceptación de los Términos</h2>
+                <p>Al acceder y utilizar Urukais Klick, aceptas estar legalmente vinculado por estos términos y condiciones. Si no estás de acuerdo con alguno de estos términos, no debes usar esta aplicación.</p>
+            </section>
+
+            <section class="legal-section">
+                <h2>2. Uso del Servicio</h2>
+                <p>Urukais Klick es una aplicación web gratuita que proporciona funcionalidades de reloj, alarma y cronómetro. El uso de la aplicación está sujeto a las siguientes condiciones:</p>
+                <ul>
+                    <li>No usar la aplicación para fines ilegales</li>
+                    <li>No interferir con el funcionamiento normal del servicio</li>
+                    <li>No intentar acceder a áreas restringidas del sistema</li>
+                </ul>
+            </section>
+
+            <section class="legal-section">
+                <h2>3. Propiedad Intelectual</h2>
+                <p>Todo el contenido presente en Urukais Klick, incluyendo pero no limitado a textos, gráficos, logos, iconos, imágenes, clips de audio, descargas digitales y compilaciones de datos, es propiedad de Urukais Klick o sus proveedores de contenido y está protegido por las leyes internacionales de propiedad intelectual.</p>
+            </section>
+
+            <section class="legal-section">
+                <h2>4. Limitación de Responsabilidad</h2>
+                <p>Urukais Klick se proporciona "tal cual" y "según disponibilidad". No garantizamos que la aplicación sea ininterrumpida o libre de errores. No seremos responsables por cualquier daño que pueda surgir del uso de la aplicación.</p>
+            </section>
+
+            <section class="legal-section">
+                <h2>5. Modificaciones</h2>
+                <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios entrarán en vigor inmediatamente después de su publicación en la aplicación.</p>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-bottom">
+        <p>© 2024 Urukais Klick. Todos los derechos reservados.</p>
+        <p>Desarrollado con <i class="fas fa-heart"></i> <a href="https://silly-boba-dc057e.netlify.app/" target="blank">por Manuel Casimiro Carrasco</a> </p>
+        <div class="legal-links">
+            <a href="/legal/terminos.html">Términos y Condiciones</a> |
+            <a href="/legal/privacidad.html">Política de Privacidad</a> |
+            <a href="/legal/cookies.html">Política de Cookies</a>
+        </div><br><br>
+    </div> 
+
+    <script src="../js/menu.js"></script>
+    <script src="../js/themes.js"></script>
+</body>
+</html> 

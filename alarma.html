@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../rana.svg" type="image/x-icon">
+    <meta name="copyright" content="Manuel Casimiro Carrasco">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urukais Klick - Alarma</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+</head>
+<body>
+    <nav class="menu">
+        <div class="menu-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="menu-items">
+            <li><a href="../index.html"><i class="fas fa-home"></i> <span data-translate="home">Inicio</span></a></li>
+            <li><a href="cronometro.html"><i class="fas fa-stopwatch"></i> <span data-translate="stopwatch">Cronómetro</span></a></li>
+            <li class="active"><a href="alarma.html"><i class="fas fa-clock"></i> <span data-translate="alarm">Alarma</span></a></li>
+            <li class="submenu">
+                <a href="#"><i class="fas fa-palette"></i> <span data-translate="themes">Temas</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu-items">
+                    <li><a href="#" data-theme="green"><i class="fas fa-circle"></i> <span data-translate="green">Verde</span></a></li>
+                    <li><a href="#" data-theme="blue"><i class="fas fa-circle"></i> <span data-translate="blue">Azul</span></a></li>
+                    <li><a href="#" data-theme="purple"><i class="fas fa-circle"></i> <span data-translate="purple">Púrpura</span></a></li>
+                </ul>
+            </li>
+            <li class="submenu">
+                <a href="#"><i class="fas fa-cog"></i> <span data-translate="settings">Configuración</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu-items">
+                    <li><a href="sounds.html"><i class="fas fa-volume-up"></i> <span data-translate="sounds">Sonidos</span></a></li>
+                    <li class="submenu">
+                        <a href="#"><i class="fas fa-language"></i> <span data-translate="language">Idioma</span> <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu-items language-menu">
+                            <li><a href="#" onclick="setLanguage('es')"><span class="flag-icon flag-icon-es"></span> Español</a></li>
+                            <li><a href="#" onclick="setLanguage('en')"><span class="flag-icon flag-icon-gb"></span> English</a></li>
+                            <li><a href="#" onclick="setLanguage('fr')"><span class="flag-icon flag-icon-fr"></span> Français</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="/pages/a-cerca-de.html"><i class="fas fa-info-circle"></i> <span data-translate="about">Acerca de</span></a></li>
+        </ul>
+    </nav>
+    <div class="menu-overlay"></div>
+
+    <div class="contenedor">
+        <h1>🐸 Alarma 🐸</h1>
+        
+        <div class="alarma-container">
+            <div class="alarma-form">
+                <div class="form-group">
+                    <label for="tipoAlarma">Tipo de Alarma:</label>
+                    <select id="tipoAlarma" class="tiempo-input">
+                        <option value="una-vez">Una vez</option>
+                        <option value="diaria">Diaria</option>
+                        <option value="dias-especificos">Días específicos</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Hora:</label>
+                    <div class="tiempo-alarma">
+                        <input type="number" id="horas" class="tiempo-input" min="0" max="23" value="00">
+                        <span class="tiempo-separador">:</span>
+                        <input type="number" id="minutos" class="tiempo-input" min="0" max="59" value="00">
+                    </div>
+                </div>
+
+                <div id="diasSemana" class="dias-semana" style="display: none;">
+                    <label>Días de la semana:</label>
+                    <div class="dias-grid">
+                        <label class="dia-checkbox"><input type="checkbox" name="dias" value="0"> Dom</label>
+                        <label class="dia-checkbox"><input type="checkbox" name="dias" value="1"> Lun</label>
+                        <label class="dia-checkbox"><input type="checkbox" name="dias" value="2"> Mar</label>
+                        <label class="dia-checkbox"><input type="checkbox" name="dias" value="3"> Mié</label>
+                        <label class="dia-checkbox"><input type="checkbox" name="dias" value="4"> Jue</label>
+                        <label class="dia-checkbox"><input type="checkbox" name="dias" value="5"> Vie</label>
+                        <label class="dia-checkbox"><input type="checkbox" name="dias" value="6"> Sáb</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="sonidoAlarma">Video de alarma:</label>
+                    <div class="video-selector">
+                        <select id="sonidoAlarma" class="tiempo-input">
+                            <option value="">Selecciona un video</option>
+                            <option value="Cyberpunk POLICE 2250   AI Multiverse Short Film.mp4">Cyberpunk Police</option>
+                            <option value="Black Sabbath – Headless Cross (Official HD Video).mp4">Black Sabbath</option>
+                            <option value="Motionless In White - Meltdown [Official Audio + Lyrics].mp4">Motionless In White - Meltdown </option>
+                            <option value="Disturbed - Down With The Sickness (Violet Orlandi ft Ai Mori COVER).mp4">isturbed - Down With The Sickness </option>
+                            <option value="METALWINGS - Crying of the Sun [OFFICIAL VIDEO].mp4">METALWINGS  </option>
+                            <option value="RAMMSTEIN ROSA PASTEL   PARODIA.mp4">RAMMSTEIN ROSA PASTEL </option>
+                            <option value="SKYFALL - Electric Ladies.mp4">SKYFALL - Electric Ladies </option>
+                            <option value="Motionless In White - Werewolf [Official Video].webm">Motionless In White - Meltdown </option>
+                            <option value="March of Titans - Epic Rock Music   AI Short Animated Cinematic.mp4">/March of Titans - Epic Rock Music </option>
+                            <option value="SKYFALL - Electric Ladies.mp4">SKYFALL - Electric Ladies </option>
+                        </select>
+                        <div id="videoPreview" class="video-preview" style="display: none;">
+                            <video id="previewVideo" controls>
+                                <source src="" type="video/mp4">
+                                Tu navegador no soporta el elemento de video.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <input type="text" id="descripcion" placeholder="Descripción (opcional)" class="tiempo-input">
+                </div>
+
+                <button id="establecerAlarma" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Establecer Alarma
+                </button>
+            </div>
+
+            <div class="alarmas-activas">
+                <h2><i class="fas fa-clock"></i> Alarmas Programadas</h2>
+                <div id="listaAlarmas"></div>
+            </div>
+        </div>
+
+        <div id="videoContainer" class="video-container" style="display: none;">
+            <video id="video" controls>
+                <source src="../videos/Cyberpunk POLICE 2250   AI Multiverse Short Film.mp4" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+            </video>
+            <button id="detenerAlarma" class="btn btn-detener">
+                <i class="fas fa-stop"></i> Detener Alarma
+            </button>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2025 Urukais Klick. Todos los derechos reservados.</p>
+        <p>Desarrollado con <i class="fas fa-heart"></i> <a href="https://silly-boba-dc057e.netlify.app/" target="blank">por Manuel Casimiro Carrasco</a></p>
+        <div class="legal-links">
+            <a href="../legal/terminos.html">Términos y Condiciones</a> |
+            <a href="../legal/privacidad.html">Política de Privacidad</a> |
+            <a href="../legal/cookies.html">Política de Cookies</a>
+        </div>
+    </div>
+
+    <script src="../js/menu.js"></script>
+    <script src="../js/themes.js"></script>
+    <script src="../js/language.js"></script>
+    <script src="../js/sounds.js"></script>
+    <script src="../js/service-worker.js"></script>
+
+    <script>
+        // Variables globales
+        let alarmas = [];
+        let registroAlarmas = [];
+        let alarmaActual = null;
+        
+        // Elementos del DOM
+        const btnEstablecerAlarma = document.getElementById('establecerAlarma');
+        const btnDetener = document.getElementById('detenerAlarma');
+        const videoContainer = document.getElementById('videoContainer');
+        const video = document.getElementById('video');
+        const listaAlarmas = document.getElementById('listaAlarmas');
+
+        // Cargar alarmas guardadas al inicio
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarAlarmas();
+            cargarVideos();
+            actualizarListaAlarmas();
+            setInterval(verificarAlarmas, 1000); // Verificar cada segundo
+        });
+
+        // Función para cargar alarmas
+        function cargarAlarmas() {
+            try {
+                const alarmasGuardadas = localStorage.getItem('alarmas');
+                if (alarmasGuardadas) {
+                    alarmas = JSON.parse(alarmasGuardadas);
+                }
+            } catch (error) {
+                console.error('Error al cargar alarmas:', error);
+                alarmas = [];
+            }
+        }
+
+        // Función para cargar los videos en el selector
+        function cargarVideos() {
+            const select = document.getElementById('sonidoAlarma');
+            const videoPreview = document.getElementById('videoPreview');
+            const previewVideo = document.getElementById('previewVideo');
+
+            select.addEventListener('change', function() {
+                if (this.value) {
+                    previewVideo.src = `../videos/${this.value}`;
+                    videoPreview.style.display = 'block';
+                    previewVideo.load();
+                    previewVideo.play().catch(error => {
+                        console.error('Error al reproducir la previsualización:', error);
+                    });
+                } else {
+                    videoPreview.style.display = 'none';
+                    previewVideo.pause();
+                    previewVideo.src = '';
+                }
+            });
+        }
+
+        // Mostrar/ocultar selector de días
+        document.getElementById('tipoAlarma').addEventListener('change', function(e) {
+            const diasSemana = document.getElementById('diasSemana');
+            diasSemana.style.display = e.target.value === 'dias-especificos' ? 'block' : 'none';
+        });
+
+        // Establecer nueva alarma
+        btnEstablecerAlarma.addEventListener('click', () => {
+            try {
+                const horas = parseInt(document.getElementById('horas').value) || 0;
+                const minutos = parseInt(document.getElementById('minutos').value) || 0;
+                const tipoAlarma = document.getElementById('tipoAlarma').value;
+                const descripcion = document.getElementById('descripcion').value.trim();
+                const sonidoSeleccionado = document.getElementById('sonidoAlarma').value;
+
+                // Validar que se haya seleccionado un video
+                if (!sonidoSeleccionado) {
+                    alert('Por favor, selecciona un video para la alarma');
+                    return;
+                }
+
+                // Validaciones
+                if (horas < 0 || horas > 23 || minutos < 0 || minutos > 59) {
+                    alert('Por favor, ingresa una hora válida');
+                    return;
+                }
+
+                // Validar hora futura para alarmas únicas
+                if (tipoAlarma === 'una-vez') {
+                    const ahora = new Date();
+                    const horaAlarma = new Date();
+                    horaAlarma.setHours(horas, minutos, 0, 0);
+                    
+                    if (horaAlarma <= ahora) {
+                        alert('No puedes programar una alarma para una hora pasada');
+                        return;
+                    }
+                }
+
+                // Obtener días seleccionados
+                let diasSeleccionados = [];
+                if (tipoAlarma === 'dias-especificos') {
+                    diasSeleccionados = Array.from(document.querySelectorAll('#diasSemana input:checked'))
+                        .map(input => parseInt(input.value));
+                    
+                    if (diasSeleccionados.length === 0) {
+                        alert('Por favor, selecciona al menos un día de la semana');
+                        return;
+                    }
+                }
+
+                // Crear nueva alarma
+                const nuevaAlarma = {
+                    id: Date.now(),
+                    horas,
+                    minutos,
+                    tipoAlarma,
+                    descripcion,
+                    diasSeleccionados,
+                    sonidoSeleccionado,
+                    activa: true
+                };
+
+                // Verificar duplicados
+                const alarmaExiste = alarmas.some(alarma => 
+                    alarma.horas === horas && 
+                    alarma.minutos === minutos && 
+                    alarma.tipoAlarma === tipoAlarma &&
+                    JSON.stringify(alarma.diasSeleccionados) === JSON.stringify(diasSeleccionados)
+                );
+
+                if (alarmaExiste) {
+                    alert('Esta alarma ya está programada');
+                    return;
+                }
+
+                // Guardar alarma
+                alarmas.push(nuevaAlarma);
+                localStorage.setItem('alarmas', JSON.stringify(alarmas));
+                actualizarListaAlarmas();
+
+                // Mensaje de confirmación
+                let mensaje = `✅ Alarma programada para las ${formatearTiempo(horas)}:${formatearTiempo(minutos)}`;
+                if (tipoAlarma === 'diaria') {
+                    mensaje += ' todos los días';
+                } else if (tipoAlarma === 'dias-especificos') {
+                    const diasTexto = diasSeleccionados.map(d => ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'][d]).join(', ');
+                    mensaje += ` los días: ${diasTexto}`;
+                }
+                alert(mensaje);
+
+                // Limpiar formulario
+                document.getElementById('horas').value = '00';
+                document.getElementById('minutos').value = '00';
+                document.getElementById('descripcion').value = '';
+                document.querySelectorAll('#diasSemana input').forEach(input => input.checked = false);
+
+            } catch (error) {
+                console.error('Error al establecer la alarma:', error);
+                alert('Error al establecer la alarma. Por favor, intenta de nuevo.');
+            }
+        });
+
+        // Función para verificar alarmas
+        function verificarAlarmas() {
+            const ahora = new Date();
+            const horaActual = ahora.getHours();
+            const minutosActual = ahora.getMinutes();
+            const diaActual = ahora.getDay();
+
+            alarmas.forEach((alarma, index) => {
+                if (alarma.activa) {
+                    let debeSonar = false;
+
+                    if (alarma.tipoAlarma === 'una-vez') {
+                        debeSonar = alarma.horas === horaActual && alarma.minutos === minutosActual;
+                    } else if (alarma.tipoAlarma === 'diaria') {
+                        debeSonar = alarma.horas === horaActual && alarma.minutos === minutosActual;
+                    } else if (alarma.tipoAlarma === 'dias-especificos') {
+                        debeSonar = alarma.diasSeleccionados.includes(diaActual) && 
+                                   alarma.horas === horaActual && 
+                                   alarma.minutos === minutosActual;
+                    }
+
+                    if (debeSonar) {
+                        reproducirAlarma(alarma);
+                        
+                        if (alarma.tipoAlarma === 'una-vez') {
+                            alarmas.splice(index, 1);
+                            localStorage.setItem('alarmas', JSON.stringify(alarmas));
+                            actualizarListaAlarmas();
+                        }
+                    }
+                }
+            });
+        }
+
+        // Función para reproducir alarma
+        function reproducirAlarma(alarma) {
+            try {
+                alarmaActual = alarma;
+                const videoPath = `../videos/${alarma.sonidoSeleccionado}`;
+                
+                video.src = videoPath;
+                video.load();
+                videoContainer.style.display = 'block';
+                
+                video.play().then(() => {
+                    console.log('Video reproduciéndose correctamente');
+                }).catch(error => {
+                    console.error('Error al reproducir el video:', error);
+                    alert('Error al reproducir el video. Por favor, verifica que el archivo existe.');
+                    videoContainer.style.display = 'none';
+                });
+                
+                if ('Notification' in window) {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            new Notification('¡Alarma!', {
+                                body: alarma.descripcion || 'Es hora de tu alarma',
+                                icon: '../rana.svg'
+                            });
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error en reproducirAlarma:', error);
+                alert('Error al reproducir la alarma. Por favor, intenta de nuevo.');
+            }
+        }
+
+        // Detener alarma
+        btnDetener.addEventListener('click', () => {
+            try {
+                video.pause();
+                video.currentTime = 0;
+                videoContainer.style.display = 'none';
+                alarmaActual = null;
+            } catch (error) {
+                console.error('Error al detener la alarma:', error);
+            }
+        });
+
+        // Función para actualizar lista de alarmas
+        function actualizarListaAlarmas() {
+            if (alarmas.length === 0) {
+                listaAlarmas.innerHTML = `
+                    <div class="alarma-item">
+                        <div class="alarma-info">
+                            <div class="alarma-tiempo">
+                                <i class="fas fa-info-circle"></i> No hay alarmas programadas
+                            </div>
+                            <div class="alarma-detalle">
+                                Haz clic en "Establecer Alarma" para crear una nueva
+                            </div>
+                        </div>
+                    </div>`;
+                return;
+            }
+            
+            listaAlarmas.innerHTML = alarmas.map((alarma, index) => {
+                let repeticionTexto = '';
+                if (alarma.tipoAlarma === 'diaria') {
+                    repeticionTexto = 'Todos los días';
+                } else if (alarma.tipoAlarma === 'dias-especificos') {
+                    const dias = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+                    repeticionTexto = alarma.diasSeleccionados.map(d => dias[d]).join(', ');
+                }
+                
+                return `
+                    <div class="alarma-item">
+                        <div class="alarma-info">
+                            <div class="alarma-tiempo">
+                                <i class="fas fa-clock"></i> 
+                                ${formatearTiempo(alarma.horas)}:${formatearTiempo(alarma.minutos)}
+                            </div>
+                            <div class="alarma-detalle">
+                                ${repeticionTexto}
+                                ${alarma.descripcion ? `<br><i class="fas fa-info-circle"></i> ${alarma.descripcion}` : ''}
+                                <br><i class="fas fa-video"></i> ${alarma.sonidoSeleccionado}
+                            </div>
+                        </div>
+                        <button class="btn-eliminar" onclick="eliminarAlarma(${index})">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </button>
+                    </div>`;
+            }).join('');
+        }
+
+        // Función para eliminar alarma
+        function eliminarAlarma(index) {
+            if (confirm('¿Estás seguro de que quieres eliminar esta alarma?')) {
+                alarmas.splice(index, 1);
+                localStorage.setItem('alarmas', JSON.stringify(alarmas));
+                actualizarListaAlarmas();
+            }
+        }
+
+        // Función para formatear tiempo
+        function formatearTiempo(tiempo) {
+            return tiempo.toString().padStart(2, '0');
+        }
+
+        // Agregar estilos CSS para las alarmas
+        const style = document.createElement('style');
+        style.textContent = `
+            .alarma-container {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 1rem;
+            }
+
+            @media (min-width: 768px) {
+                .alarma-container {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+
+            .alarma-form {
+                background: var(--surface-color);
+                padding: 2rem;
+                border-radius: 15px;
+                box-shadow: 0 4px 6px var(--shadow-color);
+                transition: transform 0.3s ease;
+            }
+
+            .alarma-form:hover {
+                transform: translateY(-5px);
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                color: var(--text-color);
+                font-weight: 500;
+                font-size: 1.1rem;
+            }
+
+            .tiempo-alarma {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .tiempo-input {
+                width: 100%;
+                padding: 0.75rem;
+                border: 2px solid var(--border-color);
+                border-radius: 8px;
+                background: var(--background-color);
+                color: var(--text-color);
+                font-size: 1rem;
+                transition: all 0.3s ease;
+            }
+
+            .tiempo-input:focus {
+                border-color: var(--primary-color);
+                outline: none;
+                box-shadow: 0 0 0 3px var(--primary-color-light);
+            }
+
+            .tiempo-separador {
+                font-size: 1.5rem;
+                color: var(--text-color);
+                font-weight: bold;
+            }
+
+            .dias-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 0.5rem;
+                margin-top: 0.5rem;
+            }
+
+            .dias-semana {
+                background: var(--surface-color);
+                padding: 1rem;
+                border-radius: 8px;
+                margin: 1rem 0;
+                border: 1px solid var(--border-color);
+            }
+
+            .dia-checkbox {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.75rem;
+                background: var(--background-color);
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                border: 1px solid var(--border-color);
+            }
+
+            .dia-checkbox:hover {
+                background: var(--primary-color);
+                color: white;
+                transform: translateY(-2px);
+            }
+
+            .dia-checkbox input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                cursor: pointer;
+            }
+
+            .video-selector {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .video-preview {
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto;
+                background: var(--background-color);
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 4px var(--shadow-color);
+            }
+
+            .video-preview video {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+
+            .btn-primary {
+                width: 100%;
+                padding: 1rem;
+                background: var(--primary-color);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-size: 1.1rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .btn-primary:hover {
+                background: var(--primary-color-dark);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px var(--shadow-color);
+            }
+
+            .alarmas-activas {
+                background: var(--surface-color);
+                padding: 2rem;
+                border-radius: 15px;
+                box-shadow: 0 4px 6px var(--shadow-color);
+                transition: transform 0.3s ease;
+            }
+
+            .alarmas-activas:hover {
+                transform: translateY(-5px);
+            }
+
+            .alarmas-activas h2 {
+                color: var(--primary-color);
+                margin-bottom: 1.5rem;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                font-size: 1.5rem;
+            }
+
+            #listaAlarmas {
+                max-height: 500px;
+                overflow-y: auto;
+                padding: 1rem;
+            }
+
+            .alarma-item {
+                background: var(--surface-color);
+                border-radius: 8px;
+                padding: 1.5rem;
+                margin-bottom: 1rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                transition: all 0.3s ease;
+                border: 1px solid var(--border-color);
+                box-shadow: 0 2px 4px var(--shadow-color);
+            }
+
+            .alarma-item:hover {
+                transform: translateX(5px);
+                box-shadow: 0 4px 8px var(--shadow-color);
+                border-color: var(--primary-color);
+            }
+
+            .alarma-info {
+                flex: 1;
+            }
+
+            .alarma-tiempo {
+                font-size: 1.4rem;
+                color: var(--primary-color);
+                margin-bottom: 0.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-weight: bold;
+            }
+
+            .alarma-detalle {
+                font-size: 1rem;
+                color: var(--text-color);
+                line-height: 1.4;
+            }
+
+            .btn-eliminar {
+                background: var(--error-color);
+                color: white;
+                border: none;
+                padding: 0.75rem 1.5rem;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 1rem;
+            }
+
+            .btn-eliminar:hover {
+                background: var(--error-color-hover);
+                transform: scale(1.05);
+            }
+
+            .video-container {
+                max-width: 800px;
+                margin: 2rem auto;
+                padding: 1rem;
+                background: var(--surface-color);
+                border-radius: 15px;
+                box-shadow: 0 4px 6px var(--shadow-color);
+            }
+
+            .video-container video {
+                width: 100%;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+            }
+
+            .btn-detener {
+                width: 100%;
+                padding: 1rem;
+                background: var(--error-color);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-size: 1.1rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .btn-detener:hover {
+                background: var(--error-color-hover);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px var(--shadow-color);
+            }
+
+            /* Estilos para el scrollbar */
+            #listaAlarmas::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            #listaAlarmas::-webkit-scrollbar-track {
+                background: var(--background-color);
+                border-radius: 4px;
+            }
+
+            #listaAlarmas::-webkit-scrollbar-thumb {
+                background: var(--primary-color);
+                border-radius: 4px;
+            }
+
+            #listaAlarmas::-webkit-scrollbar-thumb:hover {
+                background: var(--primary-color-dark);
+            }
+        `;
+
+        // Agregar los nuevos estilos al documento
+        const styleElement = document.createElement('style');
+        styleElement.textContent = style.textContent;
+        document.head.appendChild(styleElement);
+    </script>
+</body>
+</html>

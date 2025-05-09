@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="rana.svg" type="image/x-icon">
+    <meta name="copyright" content="Manuel Casimiro Carrasco">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urukais Klick - Reloj Digital</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+</head>
+<body>
+    <nav class="menu">
+        <div class="menu-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="menu-items">
+            <li class="active"><a href="index.html"><i class="fas fa-home"></i> <span data-translate="home">Inicio</span></a></li>
+            <li class="active"><a href="/sounds.html"><i class="fas fa-home"></i> Videos</span></a></li>
+            <li><a href="/cronometro.html"><i class="fas fa-stopwatch"></i> <span data-translate="stopwatch">Cronómetro</span></a></li>
+            <li><a href="pages/alarma.html"><i class="fas fa-clock"></i> <span data-translate="alarm">Alarma</span></a></li>
+            <li class="submenu">
+                <a href="#"><i class="fas fa-palette"></i> <span data-translate="themes">Temas</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu-items">
+                    <li><a href="#" data-theme="green"><i class="fas fa-circle"></i> <span data-translate="green">Verde</span></a></li>
+                    <li><a href="#" data-theme="blue"><i class="fas fa-circle"></i> <span data-translate="blue">Azul</span></a></li>
+                    <li><a href="#" data-theme="purple"><i class="fas fa-circle"></i> <span data-translate="purple">Púrpura</span></a></li>
+                </ul>
+            </li>
+            <li class="submenu">
+                <a href="#"><i class="fas fa-cog"></i> <span data-translate="settings">Configuración</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu-items">
+                    <li><a href="sounds.html"><i class="fas fa-volume-up"></i> <span data-translate="sounds">Sonidos</span></a></li>
+                    <li class="submenu">
+                        <a href="#"><i class="fas fa-language"></i> <span data-translate="language">Idioma</span> <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu-items">
+                            <li><a href="#" onclick="setLanguage('es')"><span class="flag-icon flag-icon-es"></span> Español</a></li>
+                            <li><a href="#" onclick="setLanguage('en')"><span class="flag-icon flag-icon-gb"></span> English</a></li>
+                            <li><a href="#" onclick="setLanguage('fr')"><span class="flag-icon flag-icon-fr"></span> Français</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="pages/a-cerca-de.html"><i class="fas fa-info-circle"></i> <span data-translate="about">Acerca de</span></a></li>
+        </ul>
+        <div class="menu-overlay"></div>
+    </nav>
+    <div class="contenedor">
+        <h1>🐸 Urukais Klick 🐸  </h1>
+        <div id="reloj">00:00:00</div>
+        <div id="frase" class="frase" data-translate="sweetDreams">Felices sueños</div>
+        <div class="alarmas-activas">
+            <h1> Alarmas Programadas  👀</h1>
+            <div id="proximasAlarmas"></div>
+        </div>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center;">
+        <img src="/img/manj.jpg" alt="">
+        <p style="margin-left: 1rem;">Despierta Mejor Cada Día
+            Tu nuevo comienzo empieza con el despertador perfecto.
+            
+            ¿Cansado de las mañanas apresuradas y el sonido estridente que arruina tu humor desde temprano? Nuestro despertador está diseñado para ayudarte a despertar de forma natural, con funciones pensadas para cuidar tu descanso y mejorar tu rutina diaria..</p>
+    </div>
+    <div class="video-container">
+        <video 
+            id="video"
+            controls
+            preload="auto"
+            poster=""
+            width="100%"
+            height="auto">
+            <source src="videos/Cyberpunk POLICE 2250   AI Multiverse Short Film.mp4" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 Urukais Klick. Todos los derechos reservados.</p>
+        <p>Desarrollado con <i class="fas fa-heart"></i> <a href="https://silly-boba-dc057e.netlify.app/" target="blank">por Manuel Casimiro Carrasco</a> </p>
+        <div class="legal-links">
+            <a href="legal/terminos.html">Términos y Condiciones</a> |
+            <a href="legal/privacidad.html">Política de Privacidad</a> |
+            <a href="legal/cookies.html">Política de Cookies</a>
+        </div>
+    </div> 
+    
+    <script src="js/menu.js"></script>
+    <script src="js/themes.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/sounds.js"></script>
+    <script src="js/service-worker.js"></script>
+    <script src="js/script.js"></script>
+
+    <script>
+        // Función para actualizar el reloj
+        function actualizarReloj() {
+            const ahora = new Date();
+            const horas = ahora.getHours().toString().padStart(2, '0');
+            const minutos = ahora.getMinutes().toString().padStart(2, '0');
+            const segundos = ahora.getSeconds().toString().padStart(2, '0');
+            document.getElementById('reloj').textContent = `${horas}:${minutos}:${segundos}`;
+        }
+
+        setInterval(actualizarReloj, 1000);
+        actualizarReloj();
+
+        function mostrarAlarmas() {
+            const alarmas = JSON.parse(localStorage.getItem('alarmas')) || [];
+            const proximasAlarmas = document.getElementById('proximasAlarmas');
+            
+            if (alarmas.length === 0) {
+                proximasAlarmas.textContent = 'No hay alarmas programadas';
+                return;
+            }
+
+            proximasAlarmas.innerHTML = alarmas
+                .map(alarma => `${alarma.horas.toString().padStart(2, '0')}:${alarma.minutos.toString().padStart(2, '0')}`)
+                .join('<br>');
+        }
+
+        setInterval(mostrarAlarmas, 60000);
+        mostrarAlarmas();
+    </script>
+</body>
+</html>

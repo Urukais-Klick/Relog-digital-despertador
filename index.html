@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="rana.svg" type="image/x-icon">
+    <meta name="copyright" content="Manuel Casimiro Carrasco">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urukais Klick - Reloj Digital</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+</head>
+<body>
+    <nav class="menu">
+        <div class="menu-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="menu-items">
+            <li class="active"><a href="index.html"><i class="fas fa-home"></i> <span data-translate="home">Inicio</span></a></li>
+            <li class="active"><a href="/sounds.html"><i class="fas fa-home"></i> Videos</span></a></li>
+            <li><a href="/cronometro.html"><i class="fas fa-stopwatch"></i> <span data-translate="stopwatch">Cronómetro</span></a></li>
+            <li><a href="pages/alarma.html"><i class="fas fa-clock"></i> <span data-translate="alarm">Alarma</span></a></li>
+            <li class="submenu">
+                <a href="#"><i class="fas fa-palette"></i> <span data-translate="themes">Temas</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu-items">
+                    <li><a href="#" data-theme="green"><i class="fas fa-circle"></i> <span data-translate="green">Verde</span></a></li>
+                    <li><a href="#" data-theme="blue"><i class="fas fa-circle"></i> <span data-translate="blue">Azul</span></a></li>
+                    <li><a href="#" data-theme="purple"><i class="fas fa-circle"></i> <span data-translate="purple">Púrpura</span></a></li>
+                </ul>
+            </li>
+            <li class="submenu">
+                <a href="#"><i class="fas fa-cog"></i> <span data-translate="settings">Configuración</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu-items">
+                    <li><a href="sounds.html"><i class="fas fa-volume-up"></i> <span data-translate="sounds">Sonidos</span></a></li>
+                    <li class="submenu">
+                        <a href="#"><i class="fas fa-language"></i> <span data-translate="language">Idioma</span> <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu-items">
+                            <li><a href="#" onclick="setLanguage('es')"><span class="flag-icon flag-icon-es"></span> Español</a></li>
+                            <li><a href="#" onclick="setLanguage('en')"><span class="flag-icon flag-icon-gb"></span> English</a></li>
+                            <li><a href="#" onclick="setLanguage('fr')"><span class="flag-icon flag-icon-fr"></span> Français</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="pages/a-cerca-de.html"><i class="fas fa-info-circle"></i> <span data-translate="about">Acerca de</span></a></li>
+        </ul>
+        <div class="menu-overlay"></div>
+    </nav>
+    <div class="contenedor">
+        <h1>🐸 Urukais Klick 🐸  </h1>
+        <div id="reloj">00:00:00</div>
+        <div id="frase" class="frase" data-translate="sweetDreams">Felices sueños</div>
+        <div class="alarmas-activas">
+            <h1> Alarmas Programadas  👀</h1>
+            <div id="proximasAlarmas"></div>
+        </div>
+    </div>
+    <div class="info-container">
+        <img src="img/manj.jpg" alt="Despertador">
+        <table>
+            <tr>
+                <td>Despierta Mejor Cada Día</td>
+            </tr>
+            <tr>
+                <td>Tu nuevo comienzo empieza con el despertador perfecto.</td>
+            </tr>
+            <tr>
+                <td>¿Cansado de las mañanas apresuradas y el sonido estridente que arruina tu humor desde temprano?</td>
+            </tr>
+            <tr>
+                <td>Nuestro despertador está diseñado para ayudarte a despertar de forma natural, con funciones pensadas para cuidar tu descanso y mejorar tu rutina diaria.</td>
+            </tr>
+        </table>
+    </div>
+    <div class="video-container" style="overflow: hidden; width: 100%; max-width: 800px; margin: 0 auto;">
+        <video 
+            id="video"
+            controls
+            preload="auto"
+            autoplay
+            poster=""
+            width="100%"
+            height="auto"
+            style="object-fit: cover; width: 90%; height: 300px; object-fit: cover;">
+            <source src="videos/Cyberpunk POLICE 2250   AI Multiverse Short Film.mp4" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 Urukais Klick. Todos los derechos reservados.</p>
+        <p>Desarrollado con <i class="fas fa-heart"></i> <a href="https://silly-boba-dc057e.netlify.app/" target="blank">por Manuel Casimiro Carrasco</a> </p>
+        <div class="legal-links">
+            <a href="legal/terminos.html">Términos y Condiciones</a> |
+            <a href="legal/privacidad.html">Política de Privacidad</a> |
+            <a href="legal/cookies.html">Política de Cookies</a>
+        </div>
+    </div> 
+    
+    <script src="js/menu.js"></script>
+    <script src="js/themes.js"></script>
+    <script src="js/language.js"></script>
+    <script src="js/sounds.js"></script>
+    <script src="js/service-worker.js"></script>
+    <script src="js/script.js"></script>
+
+    <script>
+        // Función para actualizar el reloj
+        function actualizarReloj() {
+            const ahora = new Date();
+            const horas = ahora.getHours().toString().padStart(2, '0');
+            const minutos = ahora.getMinutes().toString().padStart(2, '0');
+            const segundos = ahora.getSeconds().toString().padStart(2, '0');
+            document.getElementById('reloj').textContent = `${horas}:${minutos}:${segundos}`;
+        }
+
+        setInterval(actualizarReloj, 1000);
+        actualizarReloj();
+
+        function mostrarAlarmas() {
+            const alarmas = JSON.parse(localStorage.getItem('alarmas')) || [];
+            const proximasAlarmas = document.getElementById('proximasAlarmas');
+            
+            if (alarmas.length === 0) {
+                proximasAlarmas.textContent = 'No hay alarmas programadas';
+                return;
+            }
+
+            proximasAlarmas.innerHTML = alarmas
+                .map(alarma => `${alarma.horas.toString().padStart(2, '0')}:${alarma.minutos.toString().padStart(2, '0')}`)
+                .join('<br>');
+        }
+
+        setInterval(mostrarAlarmas, 60000);
+        mostrarAlarmas();
+
+        // Función para actualizar el fondo según la hora
+        function actualizarFondo() {
+            const hora = new Date().getHours();
+            const body = document.body;
+            
+            // Remover clases anteriores
+            body.classList.remove('amanecer', 'dia', 'atardecer', 'noche');
+            
+            // Agregar clase según la hora
+            if (hora >= 5 && hora < 8) {
+                body.classList.add('amanecer');
+            } else if (hora >= 8 && hora < 17) {
+                body.classList.add('dia');
+            } else if (hora >= 17 && hora < 20) {
+                body.classList.add('atardecer');
+            } else {
+                body.classList.add('noche');
+            }
+        }
+
+        // Actualizar el fondo cada minuto
+        setInterval(actualizarFondo, 60000);
+        actualizarFondo();
+
+        // Función para actualizar la frase según la hora
+        function actualizarFrase() {
+            const hora = new Date().getHours();
+            const frase = document.getElementById('frase');
+            
+            if (hora >= 5 && hora < 12) {
+                frase.textContent = '¡Buenos días!';
+            } else if (hora >= 12 && hora < 18) {
+                frase.textContent = '¡Buenas tardes!';
+            } else {
+                frase.textContent = '¡Buenas noches!';
+            }
+        }
+
+        // Actualizar la frase cada minuto
+        setInterval(actualizarFrase, 60000);
+        actualizarFrase();
+    </script>
+
+    <style>
+        .contenedor {
+            width: 100%;
+            max-width: 100%;
+            padding: 1rem;
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        #reloj {
+            font-size: 3rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .frase {
+            font-size: 1.5rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .alarmas-activas {
+            width: 100%;
+            max-width: 100%;
+            padding: 1rem;
+            box-sizing: border-box;
+            margin: 1rem 0;
+        }
+
+        .alarmas-activas h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .info-container {
+            width: 100%;
+            max-width: 100%;
+            padding: 1rem;
+            box-sizing: border-box;
+            margin: 1rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .info-container img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .info-container p {
+            width: 100%;
+            padding: 0 1rem;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            object-fit: cover;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            .contenedor {
+                padding: 0.5rem;
+            }
+
+            #reloj {
+                font-size: 2.5rem;
+            }
+
+            .frase {
+                font-size: 1.2rem;
+            }
+
+            .info-container {
+                padding: 0.5rem;
+            }
+
+            .info-container img {
+                max-width: 250px;
+            }
+
+            .video-container {
+                margin: 0;
+                padding: 0;
+            }
+
+            .video-container video {
+                max-height: 60vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contenedor {
+                padding: 0.25rem;
+            }
+
+            #reloj {
+                font-size: 2rem;
+            }
+
+            .frase {
+                font-size: 1rem;
+            }
+
+            .alarmas-activas h1 {
+                font-size: 1.2rem;
+            }
+
+            .info-container {
+                padding: 0.25rem;
+            }
+
+            .info-container img {
+                max-width: 200px;
+            }
+
+            .info-container p {
+                padding: 0 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .video-container {
+                margin: 0;
+                padding: 0;
+            }
+
+            .video-container video {
+                max-height: 50vh;
+            }
+        }
+
+        /* Estilos para el fondo dinámico */
+        body {
+            transition: background 1s ease-in-out;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Fondos según la hora */
+        body.amanecer::before {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            opacity: 0.8;
+        }
+
+        body.dia::before {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            opacity: 0.8;
+        }
+
+        body.atardecer::before {
+            background: linear-gradient(135deg, #ff9966, #ff5e62);
+            opacity: 0.8;
+        }
+
+        body.noche::before {
+            background: linear-gradient(135deg, #141e30, #243b55);
+            opacity: 0.9;
+        }
+
+        /* Animaciones para elementos */
+        .contenedor {
+            animation: fadeIn 1s ease-out;
+        }
+
+        #reloj {
+            animation: slideDown 1s ease-out;
+        }
+
+        .frase {
+            animation: slideUp 1s ease-out;
+        }
+
+        .alarmas-activas {
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .info-container {
+            animation: slideIn 1s ease-out;
+        }
+
+        .video-container {
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* Keyframes para animaciones */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Ajustes para mejor contraste */
+        .contenedor h1, #reloj, .frase {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .alarmas-activas {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        /* Efectos hover */
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Transiciones suaves */
+        .btn, .menu-items a, .submenu-items a {
+            transition: all 0.3s ease;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/rana.svg" type="image/x-icon">
+    <meta name="copyright" content="Manuel Casimiro Carrasco">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronómetro - Urukais Klick</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+</head>
+<body>
+    <nav class="menu">
+        <div class="menu-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="menu-items">
+            <li class="active"><a href="index.html"><i class="fas fa-home"></i> <span data-translate="home">Inicio</span></a></li>
+            <li class="active"><a href="/sounds.html"><i class="fas fa-home"></i> Videos</span></a></li>
+            <li><a href="/cronometro.html"><i class="fas fa-stopwatch"></i> <span data-translate="stopwatch">Cronómetro</span></a></li>
+            <li><a href="pages/alarma.html"><i class="fas fa-clock"></i> <span data-translate="alarm">Alarma</span></a></li>
+            <li class="submenu">
+                <a href="#"><i class="fas fa-palette"></i> <span data-translate="themes">Temas</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu-items">
+                    <li><a href="#" data-theme="green"><i class="fas fa-circle"></i> <span data-translate="green">Verde</span></a></li>
+                    <li><a href="#" data-theme="blue"><i class="fas fa-circle"></i> <span data-translate="blue">Azul</span></a></li>
+                    <li><a href="#" data-theme="purple"><i class="fas fa-circle"></i> <span data-translate="purple">Púrpura</span></a></li>
+                </ul>
+            </li>
+            <li class="submenu">
+                <a href="#"><i class="fas fa-cog"></i> <span data-translate="settings">Configuración</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu-items">
+                    <li><a href="sounds.html"><i class="fas fa-volume-up"></i> <span data-translate="sounds">Sonidos</span></a></li>
+                    <li class="submenu">
+                        <a href="#"><i class="fas fa-language"></i> <span data-translate="language">Idioma</span> <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu-items">
+                            <li><a href="#" onclick="setLanguage('es')"><span class="flag-icon flag-icon-es"></span> Español</a></li>
+                            <li><a href="#" onclick="setLanguage('en')"><span class="flag-icon flag-icon-gb"></span> English</a></li>
+                            <li><a href="#" onclick="setLanguage('fr')"><span class="flag-icon flag-icon-fr"></span> Français</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="pages/a-cerca-de.html"><i class="fas fa-info-circle"></i> <span data-translate="about">Acerca de</span></a></li>
+        </ul>
+        <div class="menu-overlay"></div>
+    </nav>
+    <div class="contenedor">
+        <h1>🐸 Cronómetro Digital 🐸</h1>
+        <div class="cronometro">
+            <div id="tiempo">00:00:00.00</div>
+            <div class="controles">
+                <button class="btn btn-iniciar" id="btnIniciar">
+                    <i class="fas fa-play"></i> <span data-translate="start">Iniciar</span>
+                </button>
+                <button class="btn btn-pausar" id="btnVuelta" disabled>
+                    <i class="fas fa-flag"></i> <span data-translate="lap">Vuelta</span>
+                </button>
+                <button class="btn btn-reiniciar" id="btnReiniciar" disabled>
+                    <i class="fas fa-undo"></i> <span data-translate="reset">Reiniciar</span>
+                </button>
+            </div>
+            <div class="vueltas" id="listaVueltas"></div>
+        </div>
+    </div>
+    <div>
+        <h5>Transforma tu forma de comenzar el día. Descubre cómo un buen despertar puede marcar la diferencia.
+
+            Empieza hoy. Despierta con propósito.</h5><🌅 Despertar gradual: Simula la luz del amanecer y sonidos suaves para un despertar más armonioso.
+            ⏰ Modos personalizados: Ajusta alarmas, volumen y tono según tu estilo de vida.
+            📱 Conectividad inteligente: Sincronízalo con tu smartphone o asistente virtual para una experiencia aún más completa.
+            🔋 Eficiencia y duración: Batería de larga duración y consumo mínimo de energía.h3></h3>
+    </div>
+    <div class="video-container">
+        <video 
+            id="video"
+            controls
+            preload="auto"
+            poster=""
+            width="100%"
+            height="auto">
+            <source src="../videos/Motionless In White - Werewolf [Official Video].webm" type="video/webm">
+            Tu navegador no soporta el elemento de video.
+        </video>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2024 Urukais Klick. Todos los derechos reservados.</p>
+        <p>Desarrollado con <i class="fas fa-heart"></i> <a href="https://silly-boba-dc057e.netlify.app/" target="blank">por Manuel Casimiro Carrasco</a> </p>
+        <div class="legal-links">
+            <a href="../legal/terminos.html">Términos y Condiciones</a> |
+            <a href="../legal/privacidad.html">Política de Privacidad</a> |
+            <a href="../legal/cookies.html">Política de Cookies</a>
+        </div><br><br>
+    </div> 
+    <script src="../js/menu.js"></script>
+    <script src="../js/themes.js"></script>
+    <script src="../js/language.js"></script>
+    <script>
+        let tiempoInicio = 0;
+        let cronometro = null;
+        let corriendo = false;
+        let vueltas = [];
+
+        const tiempo = document.getElementById('tiempo');
+        const btnIniciar = document.getElementById('btnIniciar');
+        const btnVuelta = document.getElementById('btnVuelta');
+        const btnReiniciar = document.getElementById('btnReiniciar');
+        const listaVueltas = document.getElementById('listaVueltas');
+
+        function formatearTiempo(ms) {
+            const minutos = Math.floor(ms / 60000);
+            const segundos = Math.floor((ms % 60000) / 1000);
+            const centesimas = Math.floor((ms % 1000) / 10);
+            return `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}.${centesimas.toString().padStart(2, '0')}`;
+        }
+
+        function actualizarCronometro() {
+            const tiempoActual = Date.now() - tiempoInicio;
+            tiempo.textContent = formatearTiempo(tiempoActual);
+        }
+
+        btnIniciar.addEventListener('click', () => {
+            if (!corriendo) {
+                // Iniciar
+                tiempoInicio = Date.now() - (cronometro ? parseInt(tiempo.textContent) : 0);
+                cronometro = setInterval(actualizarCronometro, 10);
+                corriendo = true;
+                btnIniciar.innerHTML = '<i class="fas fa-pause"></i> Pausar';
+                btnIniciar.classList.replace('btn-iniciar', 'btn-pausar');
+                btnVuelta.disabled = false;
+                btnReiniciar.disabled = false;
+            } else {
+                // Pausar
+                clearInterval(cronometro);
+                corriendo = false;
+                btnIniciar.innerHTML = '<i class="fas fa-play"></i> Continuar';
+                btnIniciar.classList.replace('btn-pausar', 'btn-iniciar');
+            }
+        });
+
+        btnVuelta.addEventListener('click', () => {
+            const tiempoActual = Date.now() - tiempoInicio;
+            vueltas.push(tiempoActual);
+            
+            const vueltaElement = document.createElement('div');
+            vueltaElement.className = 'vuelta-item';
+            vueltaElement.innerHTML = `
+                <span>Vuelta ${vueltas.length}</span>
+                <span>${formatearTiempo(tiempoActual)}</span>
+            `;
+            listaVueltas.insertBefore(vueltaElement, listaVueltas.firstChild);
+        });
+
+        btnReiniciar.addEventListener('click', () => {
+            clearInterval(cronometro);
+            tiempo.textContent = '00:00:00.00';
+            corriendo = false;
+            cronometro = null;
+            vueltas = [];
+            listaVueltas.innerHTML = '';
+            btnIniciar.innerHTML = '<i class="fas fa-play"></i> Iniciar';
+            btnIniciar.classList.replace('btn-pausar', 'btn-iniciar');
+            btnVuelta.disabled = true;
+            btnReiniciar.disabled = true;
+        });
+    </script>
+    <style>
+        .contenedor {
+            width: 100%;
+            max-width: 100%;
+            padding: 1rem;
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        .cronometro {
+            width: 100%;
+            max-width: 100%;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        #tiempo {
+            font-size: 3rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .controles {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            object-fit: cover;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .vueltas {
+            width: 100%;
+            max-width: 100%;
+            margin: 1rem 0;
+            padding: 0 1rem;
+            box-sizing: border-box;
+        }
+
+        .vuelta-item {
+            background: var(--surface-color);
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .contenedor {
+                padding: 0.5rem;
+            }
+
+            #tiempo {
+                font-size: 2.5rem;
+            }
+
+            .controles {
+                gap: 0.5rem;
+            }
+
+            .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .video-container {
+                margin: 0;
+                padding: 0;
+            }
+
+            .video-container video {
+                max-height: 60vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contenedor {
+                padding: 0.25rem;
+            }
+
+            #tiempo {
+                font-size: 2rem;
+            }
+
+            .controles {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .video-container {
+                margin: 0;
+                padding: 0;
+            }
+
+            .video-container video {
+                max-height: 50vh;
+            }
+
+            .vueltas {
+                padding: 0 0.5rem;
+            }
+
+            .vuelta-item {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</body>
+</html>

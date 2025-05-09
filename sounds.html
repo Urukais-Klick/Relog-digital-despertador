@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="rana.svg" type="image/x-icon">
+    <meta name="copyright" content="Manuel Casimiro Carrasco">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonidos - Urukais Klick</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+</head>
+<body>
+    <nav class="menu">
+        <div class="menu-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="menu-items">
+            <li><a href="index.html"><i class="fas fa-home"></i> <span data-translate="home">Inicio</span></a></li>
+            <li><a href="/cronometro.html"><i class="fas fa-stopwatch"></i> <span data-translate="stopwatch">Cronómetro</span></a></li>
+            <li><a href="/alarma.html"><i class="fas fa-clock"></i> <span data-translate="alarm">Alarma</span></a></li>
+            <li class="submenu">
+                <a href="#"><i class="fas fa-palette"></i> <span data-translate="themes">Temas</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu-items">
+                    <li><a href="#" data-theme="green"><i class="fas fa-circle"></i> <span data-translate="green">Verde</span></a></li>
+                    <li><a href="#" data-theme="blue"><i class="fas fa-circle"></i> <span data-translate="blue">Azul</span></a></li>
+                    <li><a href="#" data-theme="purple"><i class="fas fa-circle"></i> <span data-translate="purple">Púrpura</span></a></li>
+                </ul>
+            </li>
+            <li class="submenu">
+                <a href="#"><i class="fas fa-cog"></i> <span data-translate="settings">Configuración</span> <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu-items">
+                    <li class="active"><a href="sounds.html"><i class="fas fa-volume-up"></i> <span data-translate="sounds">Sonidos</span></a></li>
+                    <li><a href="/pages/notificaciones.html"><i class="fas fa-bell"></i> <span data-translate="notifications">Notificaciones</span></a></li>
+                    <li class="submenu">
+                        <a href="#"><i class="fas fa-language"></i> <span data-translate="language">Idioma</span></a>
+                        <ul class="submenu-items language-menu">
+                            <li><a href="#" onclick="setLanguage('es')"><span class="flag-icon flag-icon-es"></span> Español</a></li>
+                            <li><a href="#" onclick="setLanguage('en')"><span class="flag-icon flag-icon-gb"></span> English</a></li>
+                            <li><a href="#" onclick="setLanguage('fr')"><span class="flag-icon flag-icon-fr"></span> Français</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="/pages/a-cerca-de.html"><i class="fas fa-info-circle"></i> <span data-translate="about">Acerca de</span></a></li>
+        </ul>
+    </nav>
+
+    <div class="contenedor">
+        <h1>🐸 Sonidos 🐸</h1>
+        <div id="soundContainer" class="sound-selector">
+            <h2>Urukais Klick os desea Felices Sueños🐸</h2>
+            <div id="currentSound" class="current-sound-card"></div>
+            <h2 data-translate="selectSound">Seleccionar Sonido</h2>
+            <div class="sound-grid" id="soundGrid"></div>
+        </div>
+    </div>
+
+    <!-- Modal para reproducción de video -->
+    <div id="videoModal" class="video-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle"></h3>
+                <button class="btn-close" onclick="closeVideoModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <video id="modalVideo" controls>
+                    Tu navegador no soporta el elemento de video.
+                </video>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 Urukais Klick. Todos los derechos reservados.</p>
+        <p>Desarrollado con <i class="fas fa-heart"></i> <a href="https://silly-boba-dc057e.netlify.app/" target="blank">por Manuel Casimiro Carrasco</a> </p>
+        <div class="legal-links">
+            <a href="/legal/terminos.html">Términos y Condiciones</a> |
+            <a href="/legal/privacidad.html">Política de Privacidad</a> |
+            <a href="/legal/cookies.html">Política de Cookies</a>
+        </div><br><br>
+    </div> 
+    <!-- Scripts -->
+    <script src="js/menu.js"></script>
+    <script src="js/themes.js"></script>
+    <script src="js/sounds.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prevenir parpadeos esperando a que todo esté listo
+            document.body.style.visibility = 'hidden';
+
+            // Mostrar el sonido actual
+            const savedSound = localStorage.getItem('selectedSound') || 'werewolf';
+            const currentSound = availableSounds[savedSound];
+            
+            if (currentSound) {
+                document.getElementById('currentSound').innerHTML = `
+                    <div class="sound-card active">
+                        <img src="${currentSound.thumbnail}" 
+                            loading="lazy"
+                            alt="${currentSound.title}" 
+                            onerror="handleImageError(this, './assets/placeholder.jpg')"
+                            onload="this.style.opacity='1'"
+                            style="opacity: 0; transition: opacity 0.3s ease">
+                        <h3>${currentSound.title}</h3>
+                        <div class="button-group">
+                            <button class="btn btn-view-video" onclick="previewSound('${savedSound}')">
+                                <i class="fas fa-play"></i> Ver Video
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Mostrar la lista de sonidos disponibles
+            const soundGrid = document.getElementById('soundGrid');
+            Object.entries(availableSounds).forEach(([key, sound]) => {
+                if (key !== savedSound) {
+                    const soundCard = document.createElement('div');
+                    soundCard.className = 'sound-card';
+                    soundCard.innerHTML = `
+                        <img src="${sound.thumbnail}" 
+                            loading="lazy"
+                            alt="${sound.title}" 
+                            onerror="handleImageError(this, './assets/placeholder.jpg')"
+                            onload="this.style.opacity='1'"
+                            style="opacity: 0; transition: opacity 0.3s ease">
+                        <h3>${sound.title}</h3>
+                        <div class="button-group">
+                            <button class="btn btn-view-video" onclick="previewSound('${key}')">
+                                <i class="fas fa-play"></i> Ver Video
+                            </button>
+                            <button class="btn" onclick="selectSound('${key}')">
+                                <i class="fas fa-check"></i> Seleccionar
+                            </button>
+                        </div>
+                    `;
+                    soundGrid.appendChild(soundCard);
+                }
+            });
+
+            // Mostrar el contenido cuando todo esté listo
+            window.requestAnimationFrame(() => {
+                document.body.style.visibility = 'visible';
+                document.body.style.opacity = 1;
+            });
+        });
+
+        function previewSound(soundKey) {
+            const sound = availableSounds[soundKey];
+            if (!sound) return;
+            openVideoModal(sound);
+        }
+
+        function openVideoModal(sound) {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+            const title = document.getElementById('modalTitle');
+
+            title.textContent = sound.title;
+            video.src = sound.file;
+            
+            modal.classList.add('active');
+            video.play().catch(error => {
+                console.error('Error al reproducir:', error);
+            });
+
+            modal.onclick = function(event) {
+                if (event.target === modal) {
+                    closeVideoModal();
+                }
+            };
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+
+            video.pause();
+            video.currentTime = 0;
+            modal.classList.remove('active');
+        }
+
+        function selectSound(soundKey) {
+            changeAlarmSound(soundKey);
+            const currentSound = availableSounds[soundKey];
+            document.getElementById('currentSound').innerHTML = `
+                <div class="sound-card active">
+                    <img src="${currentSound.thumbnail}" 
+                        loading="lazy"
+                        alt="${currentSound.title}" 
+                        onerror="handleImageError(this, './assets/placeholder.jpg')"
+                        onload="this.style.opacity='1'"
+                        style="opacity: 0; transition: opacity 0.3s ease">
+                    <h3>${currentSound.title}</h3>
+                    <div class="button-group">
+                        <button class="btn btn-view-video" onclick="previewSound('${soundKey}')">
+                            <i class="fas fa-play"></i> Ver Video
+                        </button>
+                    </div>
+                </div>
+            `;
+            updateSoundGrid(soundKey);
+        }
+
+        function updateSoundGrid(selectedKey) {
+            const soundGrid = document.getElementById('soundGrid');
+            soundGrid.innerHTML = '';
+            
+            Object.entries(availableSounds).forEach(([key, sound]) => {
+                if (key !== selectedKey) {
+                    const soundCard = document.createElement('div');
+                    soundCard.className = 'sound-card';
+                    soundCard.innerHTML = `
+                        <img src="${sound.thumbnail}" 
+                            loading="lazy"
+                            alt="${sound.title}" 
+                            onerror="handleImageError(this, './assets/placeholder.jpg')"
+                            onload="this.style.opacity='1'"
+                            style="opacity: 0; transition: opacity 0.3s ease">
+                        <h3>${sound.title}</h3>
+                        <div class="button-group">
+                            <button class="btn btn-view-video" onclick="previewSound('${key}')">
+                                <i class="fas fa-play"></i> Ver Video
+                            </button>
+                            <button class="btn" onclick="selectSound('${key}')">
+                                <i class="fas fa-check"></i> Seleccionar
+                            </button>
+                        </div>
+                    `;
+                    soundGrid.appendChild(soundCard);
+                }
+            });
+        }
+    </script>
+</body>
+</html> 
